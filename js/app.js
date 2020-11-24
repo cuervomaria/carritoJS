@@ -1,3 +1,6 @@
+//Crear productos. Creo una class creadora de objeto, luego un objeto por cada producto
+//y finalmente un array con todos los objetos creados
+
 class vino {
     constructor(id, linea, varietal, precio) {
         this.id = id
@@ -15,7 +18,9 @@ let cocodrilo = new vino (4, "Cocodrilo", "Blend", 1500)
 
 let VINOS = [felinoMalbec, felinoCabernet, felinoChardonnay, cocodrilo]
 
-//-------------------------------------------------//
+//-------------------------------------------------
+
+//CREO LAS VARIABLES
 
 let catalogo = document.querySelector("#catalogo")
 let productos = []
@@ -26,6 +31,9 @@ let checkout = document.getElementById("checkout")
 let tablaProductos = document.getElementById("tablaProductos")
 let productosElegidos = document.getElementById("productosElegidos")
 
+//FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL ARRAY DE LOS OBJETOS/PRODUCTOS
+// Y CREO EL CÓDIGO HTML Q SE GUARDA EN UNA VARIABLE, QUE LUEGO FORMA UN ARRAY. Y SE CARGA EN EL BODY DEL HTML CUANDO CARGA LA PÁGINA
+//EN EL TAG BUTTON LLAMO LA FUNCIÓN AGREGO PRODUCTOS CON PARÁMETRO EL ID DEL PRODUCTO
 
 function armarCatalogo() {
   
@@ -79,6 +87,8 @@ document.body.addEventListener("load",armarCatalogo())
 // })
 
 //AGREGO PRODUCTOS CARRITO
+//SE CREA FUNCIÓN QUE AGREGA LOS PRODUCTOS AL CARRITO. SE VAN AGREGANDO LOS OBJETOS A UN ARRAY "CARRITO". 
+//FINALMENTE SE LLAMA A LA FUNCIÓN CONTAR ITEMS, PARA QUE SE MUESTREN EL NÚMERO EN EL CARRITO
 
 
 function agregoProductos(id) {
@@ -88,16 +98,18 @@ function agregoProductos(id) {
   
 }
 
-//CONTAR CANTIDAD DE ITEMS CARRITO
+//CONTAR CANTIDAD DE ITEMS CARRITO.
+//Cuenta los ítems del array carrito y luego pone ese número al lado del ícono del carrito.
 
 function contarItemsCarrito() {
   cantidadItems.innerText=carrito.length
   
 }
 
-cantidadItems.innerText = carrito.length
 
 //REVISAR CARRITO
+//Al clickear el carrito se ocultan los ítems del catálogo y se muestra una tabla con el resumen de la compra
+
 
 checkout.addEventListener("click",revisarCarrito)
 
@@ -117,8 +129,6 @@ function revisarCarrito() {
   </tr>`;
 
   productosElegidos.innerHTML += linea
-
-
     
   }
 
