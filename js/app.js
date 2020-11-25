@@ -36,6 +36,7 @@ let cantidadItems = document.getElementById("cantidadItems")
 let checkout = document.getElementById("checkout")
 let tablaProductos = document.getElementById("tablaProductos")
 let productosElegidos = document.getElementById("productosElegidos")
+let varTotal = 0
 
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL ARRAY DE LOS OBJETOS/PRODUCTOS
 // Y CREO EL CÓDIGO HTML Q SE GUARDA EN UNA VARIABLE, QUE LUEGO FORMA UN ARRAY. Y SE CARGA EN EL BODY DEL HTML CUANDO CARGA LA PÁGINA
@@ -137,13 +138,14 @@ function contarItemsCarrito() {
 
 //REVISAR CARRITO
 //Al clickear el carrito se ocultan los ítems del catálogo y se muestra una tabla con el resumen de la compra
-// Se define el ID de la X como el índice del objeto en el carrito, para que al llamar la función EliminarProducto del carrito elimine el objeto con ese index/ID
+//El símbolo elimiar, invoca la función eliminar producto del carrito, el parámetro de entrada es el index de ese producto en el array carrito
 
 checkout.addEventListener("click",revisarCarrito)
 
 function revisarCarrito() {
   catalogo.classList.add("d-none")
   tablaProductos.classList.remove("d-none")
+  productosElegidos.innerHTML=""
   let linea = ""
 
   for (let i = 0; i < carrito.length; i++) {
@@ -174,13 +176,14 @@ productosElegidos.innerHTML += linea
 
 }
 
+//CALCULA EL TOTAL DEL CARRITO. ES INVOCADA EN LA FUNCIÓN REVISAR CARRITO
 function total(){
-  debugger
-  let total = 0
+  //debugger
+  varTotal = 0
   for(j=0; j<carrito.length; j++){
-    total += carrito[j].subtotal()
+    varTotal += carrito[j].subtotal()
   }
-  return total
+  return varTotal
 }
 
  //FUNCION ELIMINA PRODUCTO DEL CARRITO
@@ -189,6 +192,35 @@ function total(){
    removed = carrito.splice(index,1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
    productosElegidos.innerHTML=""    //borra todo el contenido de la tabla
    revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
+   contarItemsCarrito()              //actualiza el número de items del carrito
 
+
+ }
+
+
+ //FUNCIÓN SEGUIR COMPRANDO. 
+ //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
+
+ function seguirComprando (){
+   tablaProductos.classList.add("d-none")
+   catalogo.classList.remove("d-none")
+
+
+ }
+
+ //FUNCION CONFIRMAR COMPRA
+
+ function confirmarCompra() {
+
+  if(carrito.length==0){
+    alert("Ud no ha añadido ningún producto a su carrito")
+    
+  }
+  else if(confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`)){
+   alert("Muchas gracias por su compra")
+   carrito = []
+   contarItemsCarrito()
+   tablaProductos.classList.add("d-none")
+   catalogo.classList.remove("d-none")}
 
  }
