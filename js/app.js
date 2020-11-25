@@ -1,5 +1,6 @@
 //Crear productos. Creo una class creadora de objeto, luego un objeto por cada producto
 //y finalmente un array con todos los objetos creados
+var subtotal
 
 class vino {
     constructor(id, linea, varietal, precio) {
@@ -7,7 +8,12 @@ class vino {
         this.linea = linea
         this.varietal = varietal
         this.precio = precio
+        this.cantidad = 1
         this.img = `img/${linea}-${varietal}.jpg`
+        this.subtotal = function (){
+          subtotal=this.cantidad * this.precio
+          return subtotal
+        }
     }
 }
 
@@ -91,8 +97,30 @@ document.body.addEventListener("load",armarCatalogo())
 //FINALMENTE SE LLAMA A LA FUNCIÓN CONTAR ITEMS, PARA QUE SE MUESTREN EL NÚMERO EN EL CARRITO
 
 
+
 function agregoProductos(id) {
- carrito.push(VINOS[id-1])
+  //debugger
+   let qProductosInicial = carrito.length
+   let existe = false
+   
+  
+  for (let i = 0; i < qProductosInicial; i++) {
+    if (carrito[i].id==id) {
+      carrito[i].cantidad +=1
+      existe = true
+      
+      break
+      
+    }
+    
+  }
+
+
+if(existe == false){
+  carrito.push(VINOS[id-1])
+}
+
+   
  alert("El producto fue agregado exitosamente")
  contarItemsCarrito()
   
@@ -109,33 +137,58 @@ function contarItemsCarrito() {
 
 //REVISAR CARRITO
 //Al clickear el carrito se ocultan los ítems del catálogo y se muestra una tabla con el resumen de la compra
-
+// Se define el ID de la X como el índice del objeto en el carrito, para que al llamar la función EliminarProducto del carrito elimine el objeto con ese index/ID
 
 checkout.addEventListener("click",revisarCarrito)
 
 function revisarCarrito() {
   catalogo.classList.add("d-none")
   tablaProductos.classList.remove("d-none")
+  let linea = ""
 
   for (let i = 0; i < carrito.length; i++) {
-   let linea =
+   linea =
    ` <tr>
     <td scope="row">${i+1}</td>
     <td>${carrito[i].linea} - ${carrito[i].varietal} </td>
-    <td>1</td>
-    <td>${carrito[i].precio} </td>
-    <td> ${carrito[i].precio}</td>
-    <td>X</td>
+    <td>${carrito[i].cantidad}</td>
+    <td>$ ${carrito[i].precio} </td>
+    <td>$ ${carrito[i].subtotal()}</td>
+    <td onclick=eliminarProductoCarrito(${i})>x</td> 
   </tr>`;
-
   productosElegidos.innerHTML += linea
-    
-  }
-
-
 
   }
 
+  linea =   
+  ` <tr>
+  <td scope="row"></td>
+  <td>TOTAL </td>
+  <td></td>
+  <td></td>
+  <td>$ ${total()}</td>
+  <td ></td> 
+</tr>`
 
-  
+productosElegidos.innerHTML += linea 
 
+}
+
+function total(){
+  debugger
+  let total = 0
+  for(j=0; j<carrito.length; j++){
+    total += carrito[j].subtotal()
+  }
+  return total
+}
+
+ //FUNCION ELIMINA PRODUCTO DEL CARRITO
+
+ function eliminarProductoCarrito(index){
+   removed = carrito.splice(index,1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
+   productosElegidos.innerHTML=""    //borra todo el contenido de la tabla
+   revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
+
+
+ }
