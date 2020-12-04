@@ -28,14 +28,14 @@ let VINOS = [felinoMalbec, felinoCabernet, felinoChardonnay, cocodrilo]
 
 //CREO LAS VARIABLES
 
-let catalogo = document.querySelector("#catalogo")
+let catalogo = $("#catalogo")
 let productos = []
 let producto = ""
 let carrito = []
-let cantidadItems = document.getElementById("cantidadItems")
-let checkout = document.getElementById("checkout")
-let tablaProductos = document.getElementById("tablaProductos")
-let productosElegidos = document.getElementById("productosElegidos")
+let cantidadItems = $("#cantidadItems")
+let checkout = $("#checkout")
+let tablaProductos = $("#tablaProductos")
+let productosElegidos = $("#productosElegidos")
 let varTotal = 0
 
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL ARRAY DE LOS OBJETOS/PRODUCTOS
@@ -63,7 +63,7 @@ function armarCatalogo() {
 
 
     })
-    catalogo.innerHTML = productos
+    catalogo.html(productos)
 
 };
 
@@ -131,7 +131,7 @@ if(existe == false){
 //Cuenta los ítems del array carrito y luego pone ese número al lado del ícono del carrito.
 
 function contarItemsCarrito() {
-  cantidadItems.innerText=carrito.length
+  cantidadItems.text(carrito.length)
   
 }
 
@@ -140,12 +140,13 @@ function contarItemsCarrito() {
 //Al clickear el carrito se ocultan los ítems del catálogo y se muestra una tabla con el resumen de la compra
 //El símbolo elimiar, invoca la función eliminar producto del carrito, el parámetro de entrada es el index de ese producto en el array carrito
 
-checkout.addEventListener("click",revisarCarrito)
+checkout.click(revisarCarrito)
 
 function revisarCarrito() {
-  catalogo.classList.add("d-none")
-  tablaProductos.classList.remove("d-none")
-  productosElegidos.innerHTML=""
+  
+  catalogo.addClass("d-none")
+  tablaProductos.removeClass("d-none")
+  productosElegidos.html("")
   let linea = ""
 
   for (let i = 0; i < carrito.length; i++) {
@@ -158,7 +159,7 @@ function revisarCarrito() {
     <td>$ ${carrito[i].subtotal()}</td>
     <td onclick=eliminarProductoCarrito(${i})>x</td> 
   </tr>`;
-  productosElegidos.innerHTML += linea
+  productosElegidos.append(linea)
 
   }
 
@@ -172,7 +173,7 @@ function revisarCarrito() {
   <td ></td> 
 </tr>`
 
-productosElegidos.innerHTML += linea 
+productosElegidos.append(linea)
 
 }
 
@@ -190,7 +191,7 @@ function total(){
 
  function eliminarProductoCarrito(index){
    removed = carrito.splice(index,1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
-   productosElegidos.innerHTML=""    //borra todo el contenido de la tabla
+   productosElegidos.html("")    //borra todo el contenido de la tabla
    revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
    contarItemsCarrito()              //actualiza el número de items del carrito
 
@@ -202,8 +203,8 @@ function total(){
  //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
 
  function seguirComprando (){
-   tablaProductos.classList.add("d-none")
-   catalogo.classList.remove("d-none")
+   tablaProductos.addClass("d-none")
+   catalogo.removeClass("d-none")
 
 
  }
@@ -220,7 +221,7 @@ function total(){
    alert("Muchas gracias por su compra")
    carrito = []
    contarItemsCarrito()
-   tablaProductos.classList.add("d-none")
-   catalogo.classList.remove("d-none")}
+   tablaProductos.addClass("d-none")
+   catalogo.removeClass("d-none")}
 
  }
