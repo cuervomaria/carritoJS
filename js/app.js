@@ -9,7 +9,7 @@ class vino {
         this.varietal = varietal
         this.precio = precio
         this.cantidad = 1
-        this.img = `img/${linea}-${varietal}.jpg`
+        this.img = `img/${linea}-${varietal}.png`
         this.subtotal = function (){
           subtotal=this.cantidad * this.precio
           return subtotal
@@ -48,7 +48,8 @@ function armarCatalogo() {
 
         producto = `<div class="col-md-4">
     <div class="card mb-4 shadow-sm">
-      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"> ${vino.linea}-${vino.varietal} </text></svg>
+      <img src=${vino.img} alt="" class="card-img-top">
+      <hr/>
       <div class="card-body">
         <p class="card-text text-center">${vino.linea} - ${vino.varietal}</p>
         <p class="card-text text-center font-weight-bold">$ ${vino.precio}</p>

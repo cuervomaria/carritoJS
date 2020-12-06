@@ -46,3 +46,9 @@ footer p {
     font-size: 3.5rem;
   }
 }
+
+.card-img-top{
+  object-fit: scale-down;
+  margin-top: 5%;
+  height: 30vh;
+}
