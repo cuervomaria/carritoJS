@@ -44,10 +44,20 @@ function armarCatalogo() {
 
 
 document.body.addEventListener("load",armarCatalogo())
+document.body.addEventListener("load",carritoInicial())
+
+function carritoInicial(){
+  if(localStorage!=undefined && localStorage.length>0){
+    carrito = JSON.parse(localStorage.carritoCargado);
+      contarItemsCarrito();
+  }
+ 
+}
 
 //AGREGO PRODUCTOS CARRITO
 //SE CREA FUNCIÓN QUE AGREGA LOS PRODUCTOS AL CARRITO. SE VAN AGREGANDO LOS OBJETOS A UN ARRAY "CARRITO". 
 //FINALMENTE SE LLAMA A LA FUNCIÓN CONTAR ITEMS, PARA QUE SE MUESTREN EL NÚMERO EN EL CARRITO
+//Se guarda el carrito en local storage para que si se reinicia la página no se pierda el carrito
 
 function agregoProductos(id) {
   //debugger
@@ -74,6 +84,7 @@ if(existe == false){
    
  alert("El producto fue agregado exitosamente")
  contarItemsCarrito()
+  localStorage.setItem("carritoCargado",JSON.stringify(carrito))
   
 }
 
@@ -143,6 +154,7 @@ function eliminarProductoCarrito(index){
   productosElegidos.html("")    //borra todo el contenido de la tabla
   revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
   contarItemsCarrito()              //actualiza el número de items del carrito
+  localStorage.setItem("carritoCargado",JSON.stringify(carrito))
 
 
 }
@@ -171,6 +183,8 @@ function confirmarCompra() {
   carrito = []
   contarItemsCarrito()
   tablaProductos.addClass("d-none")
-  catalogo.removeClass("d-none")}
+  catalogo.removeClass("d-none")
+  localStorage.clear()
+}
 
 }
