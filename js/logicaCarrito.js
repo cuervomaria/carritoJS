@@ -16,11 +16,11 @@ let subtotal = 0
 //EN EL TAG BUTTON LLAMO LA FUNCIÓN AGREGO PRODUCTOS CON PARÁMETRO EL ID DEL PRODUCTO
 
 function armarCatalogo() {
-   //debugger
-    jsonVINOS.forEach((vino)=> {
-     
+  //debugger
+  jsonVINOS.forEach((vino) => {
 
-        producto = `<div class="col-md-4">
+
+    producto = `<div class="col-md-4">
     <div class="card mb-4 shadow-sm">
       <img src=${vino.img} alt="" class="card-img-top">
       <hr/>
@@ -28,30 +28,30 @@ function armarCatalogo() {
         <p class="card-text text-center">${vino.linea} - ${vino.varietal}</p>
         <p class="card-text text-center font-weight-bold">$ ${vino.precio}</p>
         <div class="d-flex justify-content-center align-items-center">
-           <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos(${vino.id})">Agregar</button>
+           <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos2(${vino.id})">Agregar</button>
         </div>
       </div>
     </div>
   </div>`
 
-        productos.push(producto)
+    productos.push(producto)
 
 
-    })
-    catalogo.html(productos)
+  })
+  catalogo.html(productos)
 
 };
 
 
-document.body.addEventListener("load",armarCatalogo())
-document.body.addEventListener("load",carritoInicial())
+document.body.addEventListener("load", armarCatalogo())
+//document.body.addEventListener("load", carritoInicial())
 
-function carritoInicial(){
-  if(localStorage!=undefined && localStorage.length>0){
+function carritoInicial() {
+  if (localStorage != undefined && localStorage.length > 0) {
     carrito = JSON.parse(localStorage.carritoCargado);
-      contarItemsCarrito();
+    contarItemsCarrito();
   }
- 
+
 }
 
 //AGREGO PRODUCTOS CARRITO
@@ -59,33 +59,37 @@ function carritoInicial(){
 //FINALMENTE SE LLAMA A LA FUNCIÓN CONTAR ITEMS, PARA QUE SE MUESTREN EL NÚMERO EN EL CARRITO
 //Se guarda el carrito en local storage para que si se reinicia la página no se pierda el carrito
 
-function agregoProductos(id) {
-  //debugger
-   let qProductosInicial = carrito.length
-   let existe = false
-   
-  
-  for (let i = 0; i < qProductosInicial; i++) {
-    if (carrito[i].id==id) {
-      carrito[i].cantidad +=1
-      existe = true
-      
-      break
-      
-    }
-    
+function agregoProductos2(id) {
+  const index = carrito.findIndex(item => item.id === id);
+  if (index > -1) {
+    carrito[index].cantidad += 1
+  } else {
+    const productoAAgregar = jsonVINOS.find(item => item.id === id)
+    carrito.push(productoAAgregar)
   }
-
-
-if(existe == false){
-  carrito.push(jsonVINOS[id-1])
+  alert("El producto fue agregado exitosamente")
+  contarItemsCarrito()
+  localStorage.setItem("carritoCargado", JSON.stringify(carrito))
 }
 
-   
- alert("El producto fue agregado exitosamente")
- contarItemsCarrito()
-  localStorage.setItem("carritoCargado",JSON.stringify(carrito))
-  
+function agregoProductos(id) {
+  //debugger
+  let qProductosInicial = carrito.length
+  let existe = false
+  for (let i = 0; i < qProductosInicial; i++) {
+    if (carrito[i].id == id) {
+      carrito[i].cantidad += 1
+      existe = true
+      break
+    }
+  }
+  if (existe == false) {
+    const productoAgregado = jsonVINOS.find(item => item.id === id);
+    carrito.push(jsonVINOS[id - 1])          //tiene que existir una relación entre la posición del producto en el JSON y el ID? o como lo puedo identificar de otra manera?
+  }
+  alert("El producto fue agregado exitosamente")
+  contarItemsCarrito()
+  localStorage.setItem("carritoCargado", JSON.stringify(carrito))
 }
 
 //CONTAR CANTIDAD DE ITEMS CARRITO.
@@ -102,7 +106,7 @@ function contarItemsCarrito() {
 checkout.click(revisarCarrito)
 
 function revisarCarrito() {
-  
+
   catalogo.addClass("d-none")
   tablaProductos.removeClass("d-none")
   productosElegidos.html("")
@@ -110,21 +114,21 @@ function revisarCarrito() {
 
   for (let i = 0; i < carrito.length; i++) {
     subtotal = carrito[i].precio * carrito[i].cantidad
-   linea =
-   ` <tr>
-    <td scope="row">${i+1}</td>
+    linea =
+      ` <tr>
+    <td scope="row">${i + 1}</td>
     <td>${carrito[i].linea} - ${carrito[i].varietal} </td>
     <td>${carrito[i].cantidad}</td>
     <td>$ ${carrito[i].precio} </td>
     <td>$ ${subtotal} </td>
     <td onclick=eliminarProductoCarrito(${i})>x</td> 
   </tr>`;
-  productosElegidos.append(linea)
+    productosElegidos.append(linea)
 
   }
 
-  linea =   
-  ` <tr>
+  linea =
+    ` <tr>
   <td scope="row"></td>
   <td>TOTAL </td>
   <td></td>
@@ -133,28 +137,35 @@ function revisarCarrito() {
   <td ></td> 
 </tr>`
 
-productosElegidos.append(linea)
+  productosElegidos.append(linea)
 
 }
 
 //CALCULA EL TOTAL DEL CARRITO. ES INVOCADA EN LA FUNCIÓN REVISAR CARRITO
-function total(){
+function total() {
   //debugger
-  varTotal = 0
-  for(j=0; j<carrito.length; j++){
-    varTotal += carrito[j].precio * carrito[j].cantidad
-  }
-  return varTotal
+    // varTotal = 0
+    // for (j = 0; j < carrito.length; j++) {
+    //   varTotal += carrito[j].precio * carrito[j].cantidad
+    // }
+    // return varTotal
+
+  // Misma logica con function reduce
+  const total = carrito.reduce((acc, cur) => {
+    acc += cur.precio * cur.cantidad
+    return acc
+  }, 0);
+  return total
 }
 
 //FUNCION ELIMINA PRODUCTO DEL CARRITO
 
-function eliminarProductoCarrito(index){
-  removed = carrito.splice(index,1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
+function eliminarProductoCarrito(index) {
+  removed = carrito.splice(index, 1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
   productosElegidos.html("")    //borra todo el contenido de la tabla
   revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
   contarItemsCarrito()              //actualiza el número de items del carrito
-  localStorage.setItem("carritoCargado",JSON.stringify(carrito))
+  localStorage.setItem("carritoCargado", JSON.stringify(carrito))
 
 
 }
@@ -163,7 +174,7 @@ function eliminarProductoCarrito(index){
 //FUNCIÓN SEGUIR COMPRANDO. 
 //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
 
-function seguirComprando (){
+function seguirComprando() {
   tablaProductos.addClass("d-none")
   catalogo.removeClass("d-none")
 
@@ -174,17 +185,17 @@ function seguirComprando (){
 
 function confirmarCompra() {
 
- if(carrito.length==0){
-   alert("Ud no ha añadido ningún producto a su carrito")
-   
- }
- else if(confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`)){
-  alert("Muchas gracias por su compra")
-  carrito = []
-  contarItemsCarrito()
-  tablaProductos.addClass("d-none")
-  catalogo.removeClass("d-none")
-  localStorage.clear()
-}
+  if (carrito.length == 0) {
+    alert("Ud no ha añadido ningún producto a su carrito")
+
+  }
+  else if (confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`)) {
+    alert("Muchas gracias por su compra")
+    carrito = []
+    contarItemsCarrito()
+    tablaProductos.addClass("d-none")
+    catalogo.removeClass("d-none")
+    localStorage.clear()
+  }
 
 }
