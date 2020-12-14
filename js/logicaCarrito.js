@@ -10,6 +10,8 @@ let tablaProductos = $("#tablaProductos")
 let productosElegidos = $("#productosElegidos")
 let varTotal = 0
 let subtotal = 0
+let encabezado =$(".navbar")
+let contenedores = $("th")
 
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL JSON DE LOS OBJETOS/PRODUCTOS
 // Y CREO EL CÓDIGO HTML Q SE GUARDA EN UNA VARIABLE, QUE LUEGO FORMA UN ARRAY. Y SE CARGA EN EL BODY DEL HTML CUANDO CARGA LA PÁGINA
@@ -21,7 +23,7 @@ function armarCatalogo() {
 
 
     producto = `<div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
+    <div class="card mb-4 shadow-sm" >
       <img src=${vino.img} alt="" class="card-img-top">
       <hr/>
       <div class="card-body">
@@ -42,8 +44,32 @@ function armarCatalogo() {
 
 };
 
+ function dibujarCards(){ //recordar poner display:none a las card para que funcione el slideDown()
+   let card = $(".card");
+   let scrollTop = document.documentElement.scrollTop;
+    for (var i; i<card.length; i++){
+      let alturaCard= card[i].offsetTop;
+      if(alturaCard<=scrollTop){
+        card[i].slideDown(3000)
+      }
 
-document.body.addEventListener("load", armarCatalogo())
+    }
+
+ }
+
+$(window).ready(function(){
+  carritoInicial()
+  encabezado.show(2000, function(){
+    armarCatalogo()
+    //dibujarCards()
+    catalogo.slideDown(3000)
+  })
+  
+})
+
+//document.body.addEventListener("load", function(){
+  // encabezado.show(2000);
+  // armarCatalogo()})
 //document.body.addEventListener("load", carritoInicial())
 
 function carritoInicial() {
@@ -107,8 +133,10 @@ checkout.click(revisarCarrito)
 
 function revisarCarrito() {
 
-  catalogo.addClass("d-none")
-  tablaProductos.removeClass("d-none")
+  //catalogo.addClass("d-none")
+  catalogo.fadeOut(1000)
+  //tablaProductos.removeClass("d-none")
+  tablaProductos.slideDown(2000)
   productosElegidos.html("")
   let linea = ""
 
@@ -121,7 +149,7 @@ function revisarCarrito() {
     <td>${carrito[i].cantidad}</td>
     <td>$ ${carrito[i].precio} </td>
     <td>$ ${subtotal} </td>
-    <td onclick=eliminarProductoCarrito(${i})>x</td> 
+    <td onclick=eliminarProductoCarrito(${i})> <b  role="button" class="fas fa-times-circle"></b></td> 
   </tr>`;
     productosElegidos.append(linea)
 
@@ -175,8 +203,10 @@ function eliminarProductoCarrito(index) {
 //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
 
 function seguirComprando() {
-  tablaProductos.addClass("d-none")
-  catalogo.removeClass("d-none")
+  //tablaProductos.addClass("d-none")
+  tablaProductos.fadeOut(1000)
+  //catalogo.removeClass("d-none")
+  catalogo.slideDown(2000)
 
 
 }
@@ -193,8 +223,10 @@ function confirmarCompra() {
     alert("Muchas gracias por su compra")
     carrito = []
     contarItemsCarrito()
-    tablaProductos.addClass("d-none")
-    catalogo.removeClass("d-none")
+    //tablaProductos.addClass("d-none")
+    tablaProductos.fadeOut(1000)
+    //catalogo.removeClass("d-none")
+    catalogo.slideDown(2000)
     localStorage.clear()
   }
 

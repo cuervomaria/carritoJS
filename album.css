@@ -32,6 +32,16 @@ footer p {
   margin-bottom: .25rem;
 }
 
+footer a{
+  text-decoration: none;
+  color: black;
+}
+
+footer a:hover{
+  color: black;
+  font-weight: bold;
+}
+
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
