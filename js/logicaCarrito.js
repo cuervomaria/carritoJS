@@ -27,8 +27,10 @@ function armarCatalogo() {
       <img src=${vino.img} alt="" class="card-img-top">
       <hr/>
       <div class="card-body">
-        <p class="card-text text-center">${vino.linea} - ${vino.varietal}</p>
-        <p class="card-text text-center font-weight-bold">$ ${vino.precio}</p>
+        <p class="card-text text-center"><strong>${vino.linea.toUpperCase()}</strong></p>
+        <p class="card-text text-center">${zonaFinca(vino)}</p>
+        <p class="card-text text-center"> ${vino.varietal}</p>
+        <p class="card-text text-center font-weight-bold">$ ${new Intl.NumberFormat("de-DE").format(vino.precio)}</p>
         <div class="d-flex justify-content-center align-items-center">
            <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos2(${vino.id})">Agregar</button>
         </div>
@@ -44,18 +46,32 @@ function armarCatalogo() {
 
 };
 
- function dibujarCards(){ //recordar poner display:none a las card para que funcione el slideDown()
-   let card = $(".card");
-   let scrollTop = document.documentElement.scrollTop;
-    for (var i; i<card.length; i++){
-      let alturaCard= card[i].offsetTop;
-      if(alturaCard<=scrollTop){
-        card[i].slideDown(3000)
-      }
+function zonaFinca(item){
+  //debugger
+  if(item.zona!=undefined){
+    return item.zona
+  } else if (item.finca!=undefined){
+    return item.finca
+  } else {
+    return "</br>"
+  }
 
-    }
+}
 
- }
+// <p class="card-text text-center">${if(vino.zona!=""){vino.zona}elseif(vino.finca!=""){vino.finca}else(){""}}</p>
+ 
+// function dibujarCards(){ //recordar poner display:none a las card para que funcione el slideDown()
+//    let card = $(".card");
+//    let scrollTop = document.documentElement.scrollTop;
+//     for (var i; i<card.length; i++){
+//       let alturaCard= card[i].offsetTop;
+//       if(alturaCard<=scrollTop){
+//         card[i].slideDown(3000)
+//       }
+
+//     }
+
+//  }
 
 $(window).ready(function(){
   carritoInicial()
@@ -67,10 +83,7 @@ $(window).ready(function(){
   
 })
 
-//document.body.addEventListener("load", function(){
-  // encabezado.show(2000);
-  // armarCatalogo()})
-//document.body.addEventListener("load", carritoInicial())
+
 
 function carritoInicial() {
   if (localStorage != undefined && localStorage.length > 0) {
@@ -98,25 +111,6 @@ function agregoProductos2(id) {
   localStorage.setItem("carritoCargado", JSON.stringify(carrito))
 }
 
-function agregoProductos(id) {
-  //debugger
-  let qProductosInicial = carrito.length
-  let existe = false
-  for (let i = 0; i < qProductosInicial; i++) {
-    if (carrito[i].id == id) {
-      carrito[i].cantidad += 1
-      existe = true
-      break
-    }
-  }
-  if (existe == false) {
-    const productoAgregado = jsonVINOS.find(item => item.id === id);
-    carrito.push(jsonVINOS[id - 1])          //tiene que existir una relación entre la posición del producto en el JSON y el ID? o como lo puedo identificar de otra manera?
-  }
-  alert("El producto fue agregado exitosamente")
-  contarItemsCarrito()
-  localStorage.setItem("carritoCargado", JSON.stringify(carrito))
-}
 
 //CONTAR CANTIDAD DE ITEMS CARRITO.
 //Cuenta los ítems del array carrito y luego pone ese número al lado del ícono del carrito.
@@ -133,9 +127,9 @@ checkout.click(revisarCarrito)
 
 function revisarCarrito() {
 
-  //catalogo.addClass("d-none")
+  
   catalogo.fadeOut(1000)
-  //tablaProductos.removeClass("d-none")
+  tablaProductos.removeClass("d-none")
   tablaProductos.slideDown(2000)
   productosElegidos.html("")
   let linea = ""
@@ -147,8 +141,8 @@ function revisarCarrito() {
     <td scope="row">${i + 1}</td>
     <td>${carrito[i].linea} - ${carrito[i].varietal} </td>
     <td>${carrito[i].cantidad}</td>
-    <td>$ ${carrito[i].precio} </td>
-    <td>$ ${subtotal} </td>
+    <td>$ ${new Intl.NumberFormat("de-DE").format(carrito[i].precio)} </td>
+    <td>$ ${new Intl.NumberFormat("de-DE").format(subtotal)} </td>
     <td onclick=eliminarProductoCarrito(${i})> <b  role="button" class="fas fa-times-circle"></b></td> 
   </tr>`;
     productosElegidos.append(linea)
@@ -172,25 +166,26 @@ function revisarCarrito() {
 //CALCULA EL TOTAL DEL CARRITO. ES INVOCADA EN LA FUNCIÓN REVISAR CARRITO
 function total() {
   //debugger
-    // varTotal = 0
+    //  varTotal = 0
     // for (j = 0; j < carrito.length; j++) {
-    //   varTotal += carrito[j].precio * carrito[j].cantidad
-    // }
-    // return varTotal
+    // varTotal += carrito[j].precio * carrito[j].cantidad
+    //  }
+    //  return varTotal
 
   // Misma logica con function reduce
   const total = carrito.reduce((acc, cur) => {
     acc += cur.precio * cur.cantidad
     return acc
   }, 0);
-  return total
+
+  return new Intl.NumberFormat("de-DE").format(total)
 }
 
 //FUNCION ELIMINA PRODUCTO DEL CARRITO
 
 function eliminarProductoCarrito(index) {
   removed = carrito.splice(index, 1) //elimina el producto del carrito, la variable carrito queda con los ítems que quedaron
-  productosElegidos.html("")    //borra todo el contenido de la tabla
+  productosElegidos.html("")        //borra todo el contenido de la tabla
   revisarCarrito()                  //vuelve a cargar la tabla con los productos que quedaron
   contarItemsCarrito()              //actualiza el número de items del carrito
   localStorage.setItem("carritoCargado", JSON.stringify(carrito))
@@ -203,9 +198,7 @@ function eliminarProductoCarrito(index) {
 //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
 
 function seguirComprando() {
-  //tablaProductos.addClass("d-none")
   tablaProductos.fadeOut(1000)
-  //catalogo.removeClass("d-none")
   catalogo.slideDown(2000)
 
 
@@ -219,15 +212,25 @@ function confirmarCompra() {
     alert("Ud no ha añadido ningún producto a su carrito")
 
   }
-  else if (confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`)) {
+  else if (confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${total()}`)) {
     alert("Muchas gracias por su compra")
-    carrito = []
-    contarItemsCarrito()
-    //tablaProductos.addClass("d-none")
-    tablaProductos.fadeOut(1000)
-    //catalogo.removeClass("d-none")
-    catalogo.slideDown(2000)
-    localStorage.clear()
+    vaciarCarrito()
   }
 
 }
+
+function vaciarCarrito(){
+    carrito = []
+    contarItemsCarrito()
+    tablaProductos.fadeOut(1000)
+    catalogo.slideDown(2000)
+    localStorage.clear()
+
+  }
+
+function eliminarProductosCarrito(){
+  if(confirm("¿Desea eliminar todos los productos del carrito?")){
+    vaciarCarrito()
+  }
+}
+
