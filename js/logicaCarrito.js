@@ -10,47 +10,76 @@ let tablaProductos = $("#tablaProductos")
 let productosElegidos = $("#productosElegidos")
 let varTotal = 0
 let subtotal = 0
-let encabezado =$(".navbar")
+let encabezado = $(".navbar")
 let contenedores = $("th")
+let jsonProductos = []
 
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL JSON DE LOS OBJETOS/PRODUCTOS
 // Y CREO EL CÓDIGO HTML Q SE GUARDA EN UNA VARIABLE, QUE LUEGO FORMA UN ARRAY. Y SE CARGA EN EL BODY DEL HTML CUANDO CARGA LA PÁGINA
 //EN EL TAG BUTTON LLAMO LA FUNCIÓN AGREGO PRODUCTOS CON PARÁMETRO EL ID DEL PRODUCTO
-
 function armarCatalogo() {
+  $.ajax({
+    url: "js/vinos.json",
+    dataType: "json",
+    success: function (response) {
+      jsonProductos = response
+      jsonProductos.forEach((vino) => {
+        producto = `<div class="col-md-4">
+                      <div class="card mb-4 shadow-sm" >
+                        <img src=${vino.img} alt="" class="card-img-top">
+                        <hr/>
+                        <div class="card-body">
+                          <p class="card-text text-center"><strong>${vino.linea.toUpperCase()}</strong></p>
+                          <p class="card-text text-center">${zonaFinca(vino)}</p>
+                          <p class="card-text text-center"> ${vino.varietal}</p>
+                          <p class="card-text text-center font-weight-bold">$ ${new Intl.NumberFormat("de-DE").format(vino.precio)}</p>
+                          <div class="d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos2(${vino.id})">Agregar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>`
+        productos.push(producto)
+      })
+      catalogo.html(productos)
+    }
+   }
+)}
+
+// function armarCatalogo2() {
+//   //debugger
+//   jsonVINOS.forEach((vino) => {
+
+
+//     producto = `<div class="col-md-4">
+//     <div class="card mb-4 shadow-sm" >
+//       <img src=${vino.img} alt="" class="card-img-top">
+//       <hr/>
+//       <div class="card-body">
+//         <p class="card-text text-center"><strong>${vino.linea.toUpperCase()}</strong></p>
+//         <p class="card-text text-center">${zonaFinca(vino)}</p>
+//         <p class="card-text text-center"> ${vino.varietal}</p>
+//         <p class="card-text text-center font-weight-bold">$ ${new Intl.NumberFormat("de-DE").format(vino.precio)}</p>
+//         <div class="d-flex justify-content-center align-items-center">
+//            <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos2(${vino.id})">Agregar</button>
+//         </div>
+//       </div>
+//     </div>
+//   </div>`
+
+//     productos.push(producto)
+
+
+//   })
+//   catalogo.html(productos)
+
+// };
+
+function zonaFinca(item) {
   //debugger
-  jsonVINOS.forEach((vino) => {
-
-
-    producto = `<div class="col-md-4">
-    <div class="card mb-4 shadow-sm" >
-      <img src=${vino.img} alt="" class="card-img-top">
-      <hr/>
-      <div class="card-body">
-        <p class="card-text text-center"><strong>${vino.linea.toUpperCase()}</strong></p>
-        <p class="card-text text-center">${zonaFinca(vino)}</p>
-        <p class="card-text text-center"> ${vino.varietal}</p>
-        <p class="card-text text-center font-weight-bold">$ ${new Intl.NumberFormat("de-DE").format(vino.precio)}</p>
-        <div class="d-flex justify-content-center align-items-center">
-           <button type="button" class="btn btn-sm btn-outline-secondary" id= ${vino.id} onclick="agregoProductos2(${vino.id})">Agregar</button>
-        </div>
-      </div>
-    </div>
-  </div>`
-
-    productos.push(producto)
-
-
-  })
-  catalogo.html(productos)
-
-};
-
-function zonaFinca(item){
-  //debugger
-  if(item.zona!=undefined){
+  if (item.zona != undefined) {
     return item.zona
-  } else if (item.finca!=undefined){
+  } else if (item.finca != undefined) {
     return item.finca
   } else {
     return "</br>"
@@ -59,7 +88,7 @@ function zonaFinca(item){
 }
 
 // <p class="card-text text-center">${if(vino.zona!=""){vino.zona}elseif(vino.finca!=""){vino.finca}else(){""}}</p>
- 
+
 // function dibujarCards(){ //recordar poner display:none a las card para que funcione el slideDown()
 //    let card = $(".card");
 //    let scrollTop = document.documentElement.scrollTop;
@@ -73,14 +102,15 @@ function zonaFinca(item){
 
 //  }
 
-$(window).ready(function(){
+$(document).ready(function () {
   carritoInicial()
-  encabezado.show(2000, function(){
-    armarCatalogo()
+  encabezado.show(2000, function () {
+     armarCatalogo()
     //dibujarCards()
     catalogo.slideDown(3000)
-  })
   
+  })
+
 })
 
 
@@ -127,7 +157,7 @@ checkout.click(revisarCarrito)
 
 function revisarCarrito() {
 
-  
+
   catalogo.fadeOut(1000)
   tablaProductos.removeClass("d-none")
   tablaProductos.slideDown(2000)
@@ -166,11 +196,11 @@ function revisarCarrito() {
 //CALCULA EL TOTAL DEL CARRITO. ES INVOCADA EN LA FUNCIÓN REVISAR CARRITO
 function total() {
   //debugger
-    //  varTotal = 0
-    // for (j = 0; j < carrito.length; j++) {
-    // varTotal += carrito[j].precio * carrito[j].cantidad
-    //  }
-    //  return varTotal
+  //  varTotal = 0
+  // for (j = 0; j < carrito.length; j++) {
+  // varTotal += carrito[j].precio * carrito[j].cantidad
+  //  }
+  //  return varTotal
 
   // Misma logica con function reduce
   const total = carrito.reduce((acc, cur) => {
@@ -219,17 +249,17 @@ function confirmarCompra() {
 
 }
 
-function vaciarCarrito(){
-    carrito = []
-    contarItemsCarrito()
-    tablaProductos.fadeOut(1000)
-    catalogo.slideDown(2000)
-    localStorage.clear()
+function vaciarCarrito() {
+  carrito = []
+  contarItemsCarrito()
+  tablaProductos.fadeOut(1000)
+  catalogo.slideDown(2000)
+  localStorage.clear()
 
-  }
+}
 
-function eliminarProductosCarrito(){
-  if(confirm("¿Desea eliminar todos los productos del carrito?")){
+function eliminarProductosCarrito() {
+  if (confirm("¿Desea eliminar todos los productos del carrito?")) {
     vaciarCarrito()
   }
 }
