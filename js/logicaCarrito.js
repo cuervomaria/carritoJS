@@ -104,11 +104,10 @@ function zonaFinca(item) {
 
 $(document).ready(function () {
   carritoInicial()
+  armarCatalogo()
   encabezado.show(2000, function () {
-     armarCatalogo()
-    //dibujarCards()
+     //dibujarCards()
     catalogo.slideDown(3000)
-  
   })
 
 })
@@ -116,7 +115,7 @@ $(document).ready(function () {
 
 
 function carritoInicial() {
-  if (localStorage != undefined && localStorage.length > 0) {
+  if (localStorage.carritoCargado != undefined && localStorage.length > 0) {
     carrito = JSON.parse(localStorage.carritoCargado);
     contarItemsCarrito();
   }
@@ -133,7 +132,7 @@ function agregoProductos2(id) {
   if (index > -1) {
     carrito[index].cantidad += 1
   } else {
-    const productoAAgregar = jsonVINOS.find(item => item.id === id)
+    const productoAAgregar = jsonProductos.find(item => item.id === id)
     carrito.push(productoAAgregar)
   }
   alert("El producto fue agregado exitosamente")
@@ -264,3 +263,16 @@ function eliminarProductosCarrito() {
   }
 }
 
+//Animación back to Top
+
+
+// function volverArriba (posicion){
+//   $("html, body").animate({
+//     scrollTop: posicion.offset().top},2000)
+// }
+
+
+function volverArriba (){
+  $("html, body").animate({
+    scrollTop: 0},2000)
+}
