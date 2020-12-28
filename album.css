@@ -1,4 +1,4 @@
-.jumbotron {
+/* .jumbotron {
   padding-top: 3rem;
   padding-bottom: 3rem;
   margin-bottom: 0;
@@ -15,11 +15,12 @@
 
 .jumbotron .container {
   max-width: 40rem;
-}
+} */
 
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  font-size: 14px;
 }
 
 footer p {
@@ -29,7 +30,9 @@ footer p {
 footer a{
   text-decoration: none;
   color: black;
+  
 }
+
 
 footer a:hover{
   color: black;
@@ -67,6 +70,16 @@ footer a:hover{
   
 }
 
+.btn-dark:hover{
+  background-color: #28a745;
+  border:#28a745;
+
+}
+
+/* .btnConfirmar:hover{
+
+} */
+
 .changuito {
   font-size: 13px;
 }
@@ -81,15 +94,17 @@ footer a:hover{
     font-size: 3.5rem;
   }
 
-  .jumbotron {
+  /* .jumbotron {
     padding-top: 6rem;
     padding-bottom: 6rem;
-  }
+  } */
 
   .textoNavbar{
     font-size: 18px;
   }
 }
+
+
 
 @media (max-width: 400px) {
 
