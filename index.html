@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Carrito de compras</title>
+  <title>Viña Cobos - Tienda Online</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 
@@ -64,9 +64,10 @@
           <!-- <strong>Viña Cobos</strong> -->
         </a>
         <div class="px-0 mx-0">
-          <h4 class="textoNavbar"><strong>BIENVENIDOS A LA TIENDA ONLINE DE VIÑA COBOS</strong></h4>
+          <h4 class="textoNavbar chico d-md-none"><strong>TIENDA ONLINE <br> VIÑA COBOS</strong></h4>
+          <h4 class="textoNavbar grande d-none d-md-block"><strong>TIENDA ONLINE VIÑA COBOS</strong></h4>
         </div>
-        <div class="px-0 mx-0">
+        <div class="px-0 mx-0 text-end changuito">
           <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
             aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -238,10 +239,10 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Producto</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Precio Unitario</th>
-            <th scope="col">Subtotal</th>
-            <th scope="col">Eliminar</th>
+            <th class= "text-center" scope="col">Cantidad</th>
+            <th class= "text-center" scope="col">Precio Unitario</th>
+            <th class= "text-center" scope="col">Subtotal</th>
+            <th class= "text-center" scope="col">Eliminar</th>
           </tr>
         <tbody id="productosElegidos">
           <!-- <tr>
@@ -267,10 +268,22 @@
       
     </div>
     <div class="container">
-      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="eliminarProductosCarrito()">Vaciar Carrito</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="seguirComprando()">Seguir comprando</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="confirmarCompra()">Confirmar compra</button>
-      
+      <div class="row">
+      <div class="col-12 d-flex justify-content-around">
+      <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="seguirComprando()">   Seguir comprando <i class="fas fa-arrow-left"></i></button>
+      <button type="button" class="btn btn-sm btn-dark btn-lg botones" onclick="confirmarCompra()">Confirmar compra <i class="fas fa-check"></i></button>
+      <button type="button" class="btn btn-sm btn-outline-danger btn-sm btnVaciar" onclick="eliminarProductosCarrito()">Vaciar Carrito <i class="fas fa-trash-alt"></i></button>
+      <!-- <p class="float-right" role="button" style="color: grey;" onclick="eliminarProductosCarrito()">Vaciar Carrito <i class="fas fa-trash-alt"></i></p> -->
+      </div>
+      </div>
+      <!-- <div class="col-2 d-flex-end">
+      <button type="button" class="btn btn-sm btn-outline-secondary" onclick="eliminarProductosCarrito()">Vaciar Carrito <i class="fas fa-trash-alt"></i></button>
+      </div> -->
+    
+      <div >
+     
+    
+    </div>
     </div>
   </section>
 

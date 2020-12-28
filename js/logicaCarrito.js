@@ -157,9 +157,12 @@ checkout.click(revisarCarrito)
 function revisarCarrito() {
 
 
-  catalogo.fadeOut(1000)
-  tablaProductos.removeClass("d-none")
-  tablaProductos.slideDown(2000)
+  catalogo.fadeOut(1000, function (){
+    tablaProductos.slideDown(2000)
+
+  })
+  //tablaProductos.removeClass("d-none")
+  
   productosElegidos.html("")
   let linea = ""
 
@@ -169,10 +172,10 @@ function revisarCarrito() {
       ` <tr>
     <td scope="row">${i + 1}</td>
     <td>${carrito[i].linea} - ${carrito[i].varietal} </td>
-    <td>${carrito[i].cantidad}</td>
-    <td>$ ${new Intl.NumberFormat("de-DE").format(carrito[i].precio)} </td>
-    <td>$ ${new Intl.NumberFormat("de-DE").format(subtotal)} </td>
-    <td onclick=eliminarProductoCarrito(${i})> <b  role="button" class="fas fa-times-circle"></b></td> 
+    <td class="d-flex justify-content-around"> <i onclick=disminuirCantidad(${i})><span role="button" class="fas fa-minus-circle"></span></i>${carrito[i].cantidad}<i onclick=aumentarCantidad(${i})><span role="button" class="fas fa-plus-circle"></span></i></td>
+    <td class= "text-center">$ ${new Intl.NumberFormat("de-DE").format(carrito[i].precio)} </td>
+    <td class= "text-center">$ ${new Intl.NumberFormat("de-DE").format(subtotal)} </td>
+    <td class= "text-center" onclick=eliminarProductoCarrito(${i})> <b  role="button" class="fas fa-times-circle"></b></td> 
   </tr>`;
     productosElegidos.append(linea)
 
@@ -184,7 +187,7 @@ function revisarCarrito() {
   <td>TOTAL </td>
   <td></td>
   <td></td>
-  <td>$ ${total()}</td>
+  <td class= "text-center"><b>$ ${total()}</b></td>
   <td ></td> 
 </tr>`
 
@@ -262,6 +265,23 @@ function eliminarProductosCarrito() {
     vaciarCarrito()
   }
 }
+
+function disminuirCantidad (index) {
+  if (carrito[index].cantidad ===1){
+    eliminarProductoCarrito(index)
+  }
+  else {
+    carrito[index].cantidad = carrito[index].cantidad-1
+    revisarCarrito()
+    localStorage.setItem("carritoCargado", JSON.stringify(carrito))
+  } 
+}
+
+function aumentarCantidad (index) {
+    carrito[index].cantidad = carrito[index].cantidad+1
+    revisarCarrito()
+    localStorage.setItem("carritoCargado", JSON.stringify(carrito))
+  }
 
 //Animación back to Top
 

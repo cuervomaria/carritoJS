@@ -4,12 +4,6 @@
   margin-bottom: 0;
   background-color: #fff;
 }
-@media (min-width: 768px) {
-  .jumbotron {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
-}
 
 .jumbotron p:last-child {
   margin-bottom: 0;
@@ -51,11 +45,7 @@ footer a:hover{
   user-select: none;
 }
 
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
+
 
 .card-img-top{
   object-fit: scale-down;
@@ -65,4 +55,76 @@ footer a:hover{
 
 .textoNavbar{
   color: white;
+  font-size: 13px;
+  text-align: center;
 }
+
+
+.btnVaciar {
+  color: #6c757d;
+  font-size: smaller;
+  border:none;
+  
+}
+
+.changuito {
+  font-size: 13px;
+}
+
+.table-responsive {
+  font-size: 13px;
+}
+
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
+  .textoNavbar{
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+
+  /* body{
+    font-size: 12px;
+  } */
+
+  .textoNavbar, .changuito {
+    font-size: 13px;
+  }
+
+
+  .table-responsive {
+    font-size: 10px;
+  }
+
+  .botones, .btnVaciar, footer{
+    font-size: 12px;
+  }
+
+  .btnVaciar {
+    font-size: 12px;
+  }
+  #catalogo {
+    line-height: 0.5;
+    font-size: 14px;
+}
+
+#catalogo button {
+  font-size: 12px;
+
+}
+
+.card-body {
+  padding-top: 8px;
+  padding-bottom: 16px;
+}
+
