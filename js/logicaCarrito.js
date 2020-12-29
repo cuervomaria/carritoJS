@@ -14,6 +14,7 @@ let encabezado = $(".navbar")
 let contenedores = $("th")
 let jsonProductos = []
 
+
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL JSON DE LOS OBJETOS/PRODUCTOS
 // Y CREO EL CÓDIGO HTML Q SE GUARDA EN UNA VARIABLE, QUE LUEGO FORMA UN ARRAY. Y SE CARGA EN EL BODY DEL HTML CUANDO CARGA LA PÁGINA
 //EN EL TAG BUTTON LLAMO LA FUNCIÓN AGREGO PRODUCTOS CON PARÁMETRO EL ID DEL PRODUCTO
@@ -296,3 +297,5 @@ function volverArriba (){
   $("html, body").animate({
     scrollTop: 0},2000)
 }
+
+

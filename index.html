@@ -22,6 +22,7 @@
   <!-- <script defer src="js/app.js"></script> -->
   <!-- <script defer src="js/objetosJson.js"></script> -->
   <script defer src="js/logicaCarrito.js" ></script>
+  <script defer src="js/checkout.js"></script>
 
   <!-- Custom styles for this template -->
   <link href="album.css" rel="stylesheet">
@@ -271,7 +272,7 @@
       <div class="row">
       <div class="col-12 d-flex justify-content-around">
       <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="seguirComprando()">   Seguir comprando <i class="fas fa-arrow-left"></i></button>
-      <button type="button" class="btn btn-sm  btn-dark btn-lg botones" onclick="confirmarCompra()">Confirmar compra <i class="fas fa-check"></i></button>
+      <button type="button" class="btn btn-sm  btn-dark btn-lg botones" onclick="confirmarCompra()">Iniciar Compra <i class="fas fa-check"></i></button>
       <button type="button" class="btn btn-sm btn-outline-danger btn-sm btnVaciar" onclick="eliminarProductosCarrito()">Vaciar Carrito <i class="fas fa-trash-alt"></i></button>
       <!-- <p class="float-right" role="button" style="color: grey;" onclick="eliminarProductosCarrito()">Vaciar Carrito <i class="fas fa-trash-alt"></i></p> -->
       </div>
@@ -284,6 +285,117 @@
      
     
     </div>
+    </div>
+  </section>
+
+  <!-- <section id="datosUsuario">
+    <div class="container">
+      <h4>INGRESE SUS DATOS</h4>
+       <hr>
+
+      <form class="needs-validation">
+        <div class="row form-group">
+          <div class="col">
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre" aria-label="First name" required>
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" id="apellido" placeholder="Apellido" aria-label="Last name" required>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col">
+            <input type="Number" class="form-control" id="telefono" placeholder="Teléfono" aria-label="First name" required>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col">
+            <input type="email" class="form-control" id="e-mail" placeholder="E-mail" aria-label="First name" required>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-12 d-flex justify-content-around">
+            <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="">  Volver <i class="fas fa-arrow-left"></i></button>
+            <button type="button" class="btn btn-dark botones" onclick="">Enviar datos <i class="fas fa-check"></i></button>
+            <button type="submit" class="btn btn-dark botones" onclick="">Enviar datos <i class="fas fa-check"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section> -->
+
+  <section>
+    <div class="container">
+      <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-6">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Nombre"  required>
+          
+          <div class="invalid-feedback">
+            Ingrese un nombre válido
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
+          
+          <div class="invalid-feedback">
+            Ingrese un apellido válido
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <label for="direccion" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
+          
+          <div class="invalid-feedback">
+            Ingrese una dirección válida
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <label for="teléfono" class="form-label">Teléfono</label>
+          <input type="number" class="form-control" id="telefono" required>
+          
+          <div class="invalid-feedback">
+            Ingrese un teléfono válido
+          </div>
+        </div>
+        <div class="col-12 mt-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="email" required>
+          
+          <div class="invalid-feedback">
+            Ingrese un e-mail válido
+          </div>
+        </div>
+    
+        <div class="col-12 d-flex justify-content-around pt-3">
+          
+          <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="">  Volver <i class="fas fa-arrow-left"></i></button>
+          <button type="submit" class="btn btn-dark botones" onclick="capturarFormulario(event)">Enviar datos <i class="fas fa-check"></i></button>
+          
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="resumenCompra">
+    <div class="container">
+      <h4>RESUMEN DE SU COMPRA </h4>
+      <hr>
+      <p>Nombre:</p>
+      <p>Dirección:</p>
+      <p>Teléfono:</p>
+      <p>Cantidad de productos:</p>
+      <p>Total de la compra:</p>
+
+      <div class="row">
+        <div class="col-12 d-flex justify-content-around">
+        <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="">   Volver <i class="fas fa-arrow-left"></i></button>
+        <button type="button" class="btn btn-sm  btn-dark botones" onclick="">Confirmar compra <i class="fas fa-check"></i></button>
+        
+        </div>
+        </div>
+
+
     </div>
   </section>
 
