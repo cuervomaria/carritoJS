@@ -218,8 +218,11 @@ function total(){
     alert("Ud no ha añadido ningún producto a su carrito")
     
   }
-  else if(confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`)){
-   alert("Muchas gracias por su compra")
+  else if(true)
+  //confirm(`Ud va a confirmar la compra de ${carrito.length} productos por un importe total de $ ${varTotal}`))
+  {
+   alert("Muchas gracias por su compra se abrirá una ventana de whatsapp para enviar su pedido por ese medio")
+   window.open("https://wa.me/5492615192186?text=I'm%20interested%20in%20your%20car%20for%20sale")
    carrito = []
    contarItemsCarrito()
    tablaProductos.addClass("d-none")

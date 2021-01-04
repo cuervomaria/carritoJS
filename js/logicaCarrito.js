@@ -13,6 +13,8 @@ let subtotal = 0
 let encabezado = $(".navbar")
 let contenedores = $("th")
 let jsonProductos = []
+let formularioDatosUsuario = $("#datosUsuario")
+let resumenCompra = $("#resumenCompra")
 
 
 //FUNCIÓN PARA ARMAR EL CATÁLOGO EN EL DOCUMENTO HTML. RECORRO EL JSON DE LOS OBJETOS/PRODUCTOS
@@ -44,8 +46,9 @@ function armarCatalogo() {
       })
       catalogo.html(productos)
     }
-   }
-)}
+  }
+  )
+}
 
 // function armarCatalogo2() {
 //   //debugger
@@ -107,7 +110,7 @@ $(document).ready(function () {
   carritoInicial()
   armarCatalogo()
   encabezado.show(2000, function () {
-     //dibujarCards()
+    //dibujarCards()
     catalogo.slideDown(3000)
   })
 
@@ -158,12 +161,12 @@ checkout.click(revisarCarrito)
 function revisarCarrito() {
 
 
-  catalogo.fadeOut(1000, function (){
+  catalogo.fadeOut(1000, function () {
     tablaProductos.slideDown(2000)
 
   })
   //tablaProductos.removeClass("d-none")
-  
+
   productosElegidos.html("")
   let linea = ""
 
@@ -226,6 +229,7 @@ function eliminarProductoCarrito(index) {
 
 }
 
+//--------- TRANSICIONES -----------------------------
 
 //FUNCIÓN SEGUIR COMPRANDO. 
 //Vuelve al catálogo (oculta la tabla y muestra el catálogo)
@@ -237,9 +241,9 @@ function seguirComprando() {
 
 }
 
-//FUNCION CONFIRMAR COMPRA
+//FUNCION CONFIRMAR COMPRA --> inicial reemplazada por iniciar compra
 
-function confirmarCompra() {
+/* function confirmarCompra() {
 
   if (carrito.length == 0) {
     alert("Ud no ha añadido ningún producto a su carrito")
@@ -250,12 +254,55 @@ function confirmarCompra() {
     vaciarCarrito()
   }
 
+} */
+// FUNCION INICIAR COMPRA
+// Oculta el resumen del carrito y muestra el formulario para ingresar los datos del cliente
+
+function iniciarCompra (){
+  if (carrito.length == 0) {
+    alert("Ud no ha añadido ningún producto a su carrito")
+
+  }
+  else {tablaProductos.fadeOut (1000, function (){
+    formularioDatosUsuario.slideDown(2000)
+  })}
 }
+
+// FUNCION VOLVER
+// Oculta el formulario y vuelve al carrito
+
+function volverCarrito (){
+  formularioDatosUsuario.fadeOut (1000, function (){
+    tablaProductos.slideDown(2000)
+  })
+}
+
+function mostrarResumen (){
+  formularioDatosUsuario.fadeOut (1000, function (){
+    resumenCompra.slideDown(2000)
+  })
+}
+
+function volverFormulario (){
+  resumenCompra.fadeOut (1000, function (){
+    formularioDatosUsuario.slideDown(2000)
+  })
+}
+
+function confirmarCompra(){
+  alert (`Muchas gracias por su compra ${nombre}, en breve le estaremos enviando sus productos a ${direccion}. Además abriremos una pestaña de whatsapp para que nos envíe su pedido y consultas por ese medio`)
+  window.open(`https://wa.me/5492615192186?text=Hola%20,%20mi%20nombre%20es%20${nombre}%20${apellido},%20te%20contacto%20por%20el%20pedido%20que%20hice%20por%20la%20web%20de%20${cantidadProductos()}%20productos%20y%20por%20un%20importe%20total%20de%20$%20${total()}`)
+  /* alert(`${nombre} se abrira una ventana de whatsapp para que nos envies el detalle de tu pedido por ahi`)
+  <a href=”https://wa.me/5491112345678”>Escríbenos por WhatsApp</a> */
+  vaciarCarrito()
+}
+
 
 function vaciarCarrito() {
   carrito = []
   contarItemsCarrito()
   tablaProductos.fadeOut(1000)
+  resumenCompra.fadeOut(1000)
   catalogo.slideDown(2000)
   localStorage.clear()
 
@@ -267,22 +314,22 @@ function eliminarProductosCarrito() {
   }
 }
 
-function disminuirCantidad (index) {
-  if (carrito[index].cantidad ===1){
+function disminuirCantidad(index) {
+  if (carrito[index].cantidad === 1) {
     eliminarProductoCarrito(index)
   }
   else {
-    carrito[index].cantidad = carrito[index].cantidad-1
-    revisarCarrito()
-    localStorage.setItem("carritoCargado", JSON.stringify(carrito))
-  } 
-}
-
-function aumentarCantidad (index) {
-    carrito[index].cantidad = carrito[index].cantidad+1
+    carrito[index].cantidad = carrito[index].cantidad - 1
     revisarCarrito()
     localStorage.setItem("carritoCargado", JSON.stringify(carrito))
   }
+}
+
+function aumentarCantidad(index) {
+  carrito[index].cantidad = carrito[index].cantidad + 1
+  revisarCarrito()
+  localStorage.setItem("carritoCargado", JSON.stringify(carrito))
+}
 
 //Animación back to Top
 
@@ -293,9 +340,10 @@ function aumentarCantidad (index) {
 // }
 
 
-function volverArriba (){
+function volverArriba() {
   $("html, body").animate({
-    scrollTop: 0},2000)
+    scrollTop: 0
+  }, 2000)
 }
 
 
