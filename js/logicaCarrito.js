@@ -301,6 +301,8 @@ function confirmarCompra(){
 function vaciarCarrito() {
   carrito = []
   contarItemsCarrito()
+  formulario.reset()
+  formulario.classList.remove("was-validated") 
   tablaProductos.fadeOut(1000)
   resumenCompra.fadeOut(1000)
   catalogo.slideDown(2000)

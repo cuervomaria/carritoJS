@@ -12,56 +12,21 @@ const formulario = document.getElementById("formulario")
 
 formulario.addEventListener("submit", function(e){
   e.preventDefault()
+  formulario.classList.add("was-validated")
   nombre=document.getElementById("nombre").value
   apellido=document.getElementById("apellido").value
   direccion=document.getElementById("direccion").value
   telefono=document.getElementById("telefono").value
   email=document.getElementById("email").value
-  resumen ()
+  if(formulario.checkValidity()===false){
+    return false
+  } else{
+    resumen ()
   mostrarResumen ()
-  return false
+  }
+    
 })
 
-// function capturarFormulario (e){
-  
-    
-//     e.preventDefault()
-//     nombre=document.getElementById("nombre").value
-//     apellido=document.getElementById("apellido").value
-//     direccion=document.getElementById("direccion").value
-//     telefono=document.getElementById("telefono").value
-//     email=document.getElementById("email").value
-
-//     resumen ()
-//     mostrarResumen ()
-    
-
-// }
-
-
-
-// function validacion() {
-//     debugger
-//     'use strict'
-  
-//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-//     var forms = document.querySelectorAll('.needs-validation')
-  
-//     // Loop over them and prevent submission
-//     Array.prototype.slice.call(forms)
-//       .forEach(function (form) {
-//         form.addEventListener('submit', function (event) {
-//           if (!form.checkValidity()) {
-//             event.preventDefault()
-//             event.stopPropagation()
-//           }
-          
-          
-//           form.classList.add('was-validated')
-//         }, false)
-//       })
-      
-//   }
 
    // FUNCION CUENTA CANTIDAD DE PRODUCTOS
 
@@ -111,8 +76,10 @@ formulario.addEventListener("submit", function(e){
 //cambiar q de productos (crear función) --ok
 //transiciones --ok
 
-//validación
-//whatsapp?? -- ver si agrego boton chateame aca o cuando se dispare la compra que se abra directamente
+//validación -- ok
+// como hago que tome la validación de bootstrap? -- class "was-validated", poner un if cuando validity sea false para que no se envie el formulario
+//orden de los archivos -- cargar catálogo, logica carrito, transiciones, checkout
+//whatsapp?? -- ver si agrego boton chateame aca o cuando se dispare la compra que se abra directamente -- ok
 // que se borren datos de formulario cuando confirmas la compra
 
 //branch datosUsuario
