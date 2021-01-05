@@ -70,6 +70,7 @@ function armarCatalogo() {
 //Cuenta los ítems del array carrito y luego pone ese número al lado del ícono del carrito.
 
 function contarItemsCarrito() {
+    
     cantidadItems.text(carrito.length)
   }
   

@@ -3,6 +3,7 @@
 let tablaProductos = $("#tablaProductos")  
 let formularioDatosUsuario = $("#datosUsuario")
 let resumenCompra = $("#resumenCompra")
+let logo = $("#logo")
 
 //--------- TRANSICIONES -----------------------------
 
@@ -73,4 +74,18 @@ function volverCarrito (){
       scrollTop: 0
     }, 2000)
   }
+
+  //FUNCIION VOLVER ARRIBA
+  
+  logo.click (function (){
+    tablaProductos.fadeOut(1000, function(){
+        formularioDatosUsuario.fadeOut(1000, function(){
+            resumenCompra.fadeOut(1000, function(){
+                catalogo.slideDown(2000)
+            })
+        })
+    })
+          
+
+  })
   

@@ -13,12 +13,12 @@ let subtotal = 0
 //Se guarda el carrito en local storage para que si se reinicia la página no se pierda el carrito
 
 function agregoProductos2(id) {
- debugger
+ 
   const index = carrito.findIndex(item => item.id === id);
   if (index > -1) {
     carrito[index].cantidad += 1
   } else {
-    productoAAgregar = jsonProductos.find(item => item.id === id)
+    const productoAAgregar = Object.assign({},jsonProductos.find(item => item.id === id)) 
     carrito.push(productoAAgregar)
   }
   alert("El producto fue agregado exitosamente")
