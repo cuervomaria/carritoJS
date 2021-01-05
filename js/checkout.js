@@ -28,23 +28,13 @@ formulario.addEventListener("submit", function(e){
 })
 
 
-   // FUNCION CUENTA CANTIDAD DE PRODUCTOS
-
-   function cantidadProductos (){
-    const QProductos = carrito.reduce((acc,cur) => {
-      acc += cur.cantidad
-      return acc
-      
-    },0);
-    
-    return QProductos
-  }
+  
 
   //FUNCION RESUMEN
   //Muestra un resumen de la compra a realizar
   function resumen(){
 
-      const resumen= ` <div class="container">
+    const resumen = ` <div class="container">
                 <h4>RESUMEN DE SU COMPRA </h4>
                 <hr>
                 <p>Nombre: ${nombre} ${apellido}</p>
@@ -57,30 +47,20 @@ formulario.addEventListener("submit", function(e){
                     <div class="col-12 d-flex justify-content-around">
                     <button type="button" class="btn btn-sm btn-outline-secondary botones" onclick="volverFormulario()">   Volver <i class="fas fa-arrow-left"></i></button>
                     <button type="button" class="btn btn-sm  btn-dark botones" onclick="confirmarCompra()">Confirmar compra <i class="fas fa-check"></i></button>
-                    
                     </div>
                     </div>
-
-
-    </div>`
-
+                 </div>`
     resumenCompra.html(resumen)
+  }
 
-
-
+  //FUNCIÓN CONFIRMAR COMPRA
+  //Muestra un alert indicando que se ha realizado la compra y abre una ventana de whatsapp para comunicarse. Vacía el carrito y vuelve a la página inicial
+  
+  function confirmarCompra(){
+    alert (` Muchas gracias por su compra ${nombre}, en breve le estaremos enviando sus productos a ${direccion}. 
+    Además abriremos una pestaña de whatsapp para que nos envíe sus consultas por ese medio`)
+    window.open(`https://wa.me/5492615192186?text=Hola%20,%20mi%20nombre%20es%20${nombre}%20${apellido},%20te%20contacto%20por%20el%20pedido%20que%20hice%20por%20la%20web%20de%20${cantidadProductos()}%20productos%20por%20un%20importe%20total%20de%20$%20${total()}`)
+    vaciarCarrito()
   }
 
  
-
-  
-//cambiar q de productos (crear función) --ok
-//transiciones --ok
-
-//validación -- ok
-// como hago que tome la validación de bootstrap? -- class "was-validated", poner un if cuando validity sea false para que no se envie el formulario
-//orden de los archivos -- cargar catálogo, logica carrito, transiciones, checkout
-//whatsapp?? -- ver si agrego boton chateame aca o cuando se dispare la compra que se abra directamente -- ok
-// que se borren datos de formulario cuando confirmas la compra
-
-//branch datosUsuario
-//limpiar código -- html innecesario por ejemplo resumen de compra
